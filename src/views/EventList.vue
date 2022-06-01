@@ -24,8 +24,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import EventCard from '@/components/EventCard.vue'
-import EventService from '@/services/EventService'
 
 export default {
   name: 'HomeView',
@@ -33,35 +33,25 @@ export default {
   components: {
     EventCard,
   },
-  data() {
-    return {
-      events: null,
-      totalEvents: 0,
-    }
-  },
-  beforeRouteEnter(routeTo, routeFrom, next) {
-    EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
-      .then((response) => {
-        next((comp) => {
-          comp.events = response.data
-          comp.totalEvents = response.headers['x-total-count']
-        })
-      })
+  created() {
+    this.$store
+      .dispatch('fetchEvents', parseInt(this.$route.query.page) || 1)
       .catch(() => {
-        next({ name: 'NetworkError' })
+        this.$router.push({ name: 'NetworkError' })
       })
   },
   beforeRouteUpdate(routeTo) {
-    return EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
-      .then((response) => {
-        this.events = response.data
-        this.totalEvents = response.headers['x-total-count']
-      })
+    this.$store
+      .dispatch('fetchEvents', parseInt(routeTo.query.page) || 1)
       .catch(() => {
-        return { name: 'NetworkError' }
+        this.$router.push({ name: 'NetworkError' })
       })
   },
   computed: {
+    ...mapState({
+      events: (state) => state.events,
+      totalEvents: (state) => state.totalEvents,
+    }),
     hasNextPage() {
       const totalPages = Math.ceil(this.totalEvents / 2)
 
