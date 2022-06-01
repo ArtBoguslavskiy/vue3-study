@@ -4,11 +4,12 @@ import EventDetails from '../views/events/EventDetails.vue'
 import EventEdit from '../views/events/EventEdit.vue'
 import EventRegister from '../views/events/EventRegister.vue'
 import EventLayout from '../views/events/EventLayout.vue'
+import EventCreate from '../views/EventCreate.vue'
 import NotFound from '../views/NotFound.vue'
 import NetworkError from '../views/NetworkError.vue'
 import NProgress from 'nprogress'
 import EventService from '@/services/EventService'
-import GStore from '@/store'
+import GStore from '@/store/reactive'
 
 const AboutView = () =>
   import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
@@ -59,6 +60,11 @@ const routes = [
         component: EventRegister,
       },
     ],
+  },
+  {
+    path: '/event/create',
+    name: 'EventCreate',
+    component: EventCreate,
   },
   {
     path: '/event/:afterEvent(.*)',
