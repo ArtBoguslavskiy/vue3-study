@@ -29,6 +29,16 @@
       "date": "July 22, 2022",
       "time": "11:00",
       "organizer": "Carey Wales"
+    },
+    {
+      "id": "a14e6074-4b60-4f30-80ce-60ea801bb8d6",
+      "category": "housing",
+      "title": "Clean the house",
+      "description": "Clean the dust in the rooms",
+      "location": "Home",
+      "date": "02.06.2022",
+      "time": "10:00",
+      "organizer": "Artem Boguslavsky"
     }
   ]
 }
