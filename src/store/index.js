@@ -24,28 +24,36 @@ export default createStore({
   },
   actions: {
     createEvent({ commit }, event) {
-      EventService.postEvent(event)
+      return EventService.postEvent(event)
         .then(() => {
           commit('ADD_EVENT', event)
         })
         .catch((error) => {
-          console.log(error)
+          throw error
         })
     },
     fetchEvents({ commit }, page) {
-      return EventService.getEvents(2, page).then((response) => {
-        commit('SET_EVENTS', response.data)
-        commit('SET_TOTAL_EVENTS', response.headers['x-total-count'])
-      })
+      return EventService.getEvents(2, page)
+        .then((response) => {
+          commit('SET_EVENTS', response.data)
+          commit('SET_TOTAL_EVENTS', response.headers['x-total-count'])
+        })
+        .catch((error) => {
+          throw error
+        })
     },
     fetchEvent({ commit, state }, id) {
       const existingEvent = state.events.find((event) => event.id === id)
       if (existingEvent) {
         commit('SET_EVENT', existingEvent)
       } else {
-        return EventService.getEvent(id).then((response) => {
-          commit('SET_EVENT', response.data)
-        })
+        return EventService.getEvent(id)
+          .then((response) => {
+            commit('SET_EVENT', response.data)
+          })
+          .catch((error) => {
+            throw error
+          })
       }
     },
   },

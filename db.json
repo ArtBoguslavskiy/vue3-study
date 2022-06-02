@@ -39,6 +39,26 @@
       "date": "02.06.2022",
       "time": "10:00",
       "organizer": "Artem Boguslavsky"
+    },
+    {
+      "id": "0fd2fca6-93d9-4da5-bd0c-245db7714cbe",
+      "category": "nature",
+      "title": "Museum",
+      "description": "Visit the museum in Kiev",
+      "location": "Kiev",
+      "date": "05.06.22",
+      "time": "10AM",
+      "organizer": "Artem Boguslavsky"
+    },
+    {
+      "id": "c4874197-47f9-4b12-941f-a29de5ca3cdc",
+      "category": "education",
+      "title": "Vuex",
+      "description": "Learn Vuex fundamentials",
+      "location": "Home",
+      "date": "02.06.22",
+      "time": "9AM",
+      "organizer": "Artem Boguslavsky"
     }
   ]
 }
