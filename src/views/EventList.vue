@@ -1,6 +1,6 @@
 <template>
   <div class="events">
-    <h1>Events For Good</h1>
+    <h1>Events For {{ user.userInfo.name }}</h1>
     <EventCard v-for="event in events" :key="event.id" :event="event" />
 
     <div class="pagination">
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import EventCard from '@/components/EventCard.vue'
 
 export default {
@@ -34,29 +34,29 @@ export default {
     EventCard,
   },
   created() {
-    this.$store
-      .dispatch('fetchEvents', parseInt(this.$route.query.page) || 1)
-      .catch(() => {
-        this.$router.push({ name: 'NetworkError' })
-      })
+    this.fetchEvents(parseInt(this.$route.query.page) || 1).catch(() => {
+      this.$router.push({ name: 'NetworkError' })
+    })
   },
   beforeRouteUpdate(routeTo) {
-    this.$store
-      .dispatch('fetchEvents', parseInt(routeTo.query.page) || 1)
-      .catch(() => {
-        this.$router.push({ name: 'NetworkError' })
-      })
+    this.fetchEvents(parseInt(routeTo.query.page) || 1).catch(() => {
+      this.$router.push({ name: 'NetworkError' })
+    })
   },
   computed: {
     ...mapState({
-      events: (state) => state.events,
-      totalEvents: (state) => state.totalEvents,
+      events: (state) => state.event.events,
+      totalEvents: (state) => state.event.totalEvents,
+      user: (state) => state.user,
     }),
     hasNextPage() {
       const totalPages = Math.ceil(this.totalEvents / 2)
 
       return this.page < totalPages
     },
+  },
+  methods: {
+    ...mapActions('event', ['fetchEvents']),
   },
 }
 </script>

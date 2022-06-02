@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   created() {
-    this.$store.dispatch('fetchEvent', this.$route.params.id).catch((error) => {
+    this.fetchEvent(this.$route.params.id).catch((error) => {
       if (error.response && error.response.status === 404) {
         this.$router.push({
           name: '404Resource',
@@ -30,8 +30,11 @@ export default {
   },
   computed: {
     ...mapState({
-      event: (state) => state.event,
+      event: (state) => state.event.currentEvent,
     }),
+  },
+  methods: {
+    ...mapActions('event', ['fetchEvent']),
   },
 }
 </script>
